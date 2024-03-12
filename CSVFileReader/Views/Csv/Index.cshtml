@@ -1,0 +1,65 @@
+﻿@model IEnumerable<CSVFileReader.Models.DataFile>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DataFiles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Files</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date Uploaded</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dataFile in Model)
+            {
+                <tr>
+                    <td>@dataFile.FileName</td>
+                    <td>@dataFile.DateUploaded</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

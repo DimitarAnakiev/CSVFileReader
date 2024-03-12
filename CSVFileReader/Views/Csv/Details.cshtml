@@ -1,0 +1,28 @@
+﻿@model List<Record>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Most Recent Data File</title>
+    <style>
+        .bar {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Most Recent Data File</h1>
+
+    @foreach (var content in Model)
+    {
+        <div class="bar" style="background-color: @content.Color; width: @content.Value%">
+            <div style="color: white; margin: 20px">
+                @content.Legend - @content.Value%
+
+            </div>
+        </div>
+    }
+</body>
+</html>

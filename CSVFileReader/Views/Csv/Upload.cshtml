@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Upload File";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .btn-upload {
+            margin-top: 10px;
+        }
+
+        .error-message {
+            color: red;
+            display: none;
+        }
+
+        .success-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 255, 0, 0.3);
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container;">
+        <h2 class="text-center">@ViewData["Title"]</h2>
+
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+            <div class="form-group">
+                <label for="fileInput">Choose File:</label>
+                <input type="file" class="form-control-file" id="fileInput" name="fileInput" accept=".txt" />
+                <p class="error-message">Please select a file before uploading.</p>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-upload" onclick="uploadFile()">Upload</button>
+
+        </form>
+    </div>
+
+    <!-- Popup for success message -->
+    <div id="successPopup" class="success-popup">
+        <p style="color: green;">Upload successful!</p>
+    </div>
+
+    <script>
+        function uploadFile() {
+            var fileInput = document.getElementById('fileInput');
+            var errorMessage = document.querySelector('.error-message');
+
+            if (fileInput.files.length === 0) {
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            errorMessage.style.display = 'none';
+
+            var formData = new FormData();
+            formData.append('fileInput', fileInput.files[0]);
+
+            // Send the file to the controller using AJAX
+            $.ajax({
+                url: '/Csv/ReadFile',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    // Display success popup
+                    showSuccessPopup();
+                },
+            });
+        }
+
+        function showSuccessPopup() {
+            var successPopup = document.getElementById('successPopup');
+            successPopup.style.display = 'block';
+
+            // Close the popup after 3 seconds
+            setTimeout(function () {
+                successPopup.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
